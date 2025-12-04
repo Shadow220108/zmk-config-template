@@ -9,3 +9,12 @@ manifest:
       import: app/west.yml
   self:
     path: config
+jobs:
+  build:
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+    with:
+      build_matrix: |
+        - board: seeeduino_xiao_ble
+          shield: SHADOW_SPT_left
+        - board: seeeduino_xiao_ble
+          shield: SHADOW_SPT_right
