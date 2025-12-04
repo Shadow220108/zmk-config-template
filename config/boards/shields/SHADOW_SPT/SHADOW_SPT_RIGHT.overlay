@@ -1,5 +1,5 @@
-/* project_ascend_right.overlay */
-#include "project_ascend.dtsi"
+/* SHADOW_SPT_right.overlay */
+#include "SHADOW_SPT.dtsi"
 #include <dt-bindings/led/led.h>
 
 /* 1. Define the Shift Register (74HC165) via SPI */
@@ -8,11 +8,11 @@
     cs-gpios = <&xiao_d 4 GPIO_ACTIVE_LOW>; /* LOAD Pin */
     
     shift_reg: 74hc165@0 {
-        compatible = "zmk,gpio-spi-595"; /* Generic shift register driver */
-        reg = ;
+        compatible = "zmk,gpio-spi-595";
+        reg = <0>;
         spi-max-frequency = <100000>;
         label = "SHIFT_REG";
-        #gpio-cells = ;
+        #gpio-cells = <2>;
         gpio-controller;
         ngpios = <8>;
     };
@@ -23,7 +23,7 @@
     compatible = "zmk,kscan-gpio-matrix";
     diode-direction = "col2row";
 
-    /* Rows are Direct XIAO Pins (As per your schematic restart) */
+    /* Rows are Direct XIAO Pins */
     row-gpios
         = <&xiao_d 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
         , <&xiao_d 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
@@ -49,11 +49,10 @@
         y-input-code = <INPUT_REL_Y>;
         /* Pins D0 and D1 are Analog A0 and A1 */
         io-channels = <&adc 0>, <&adc 1>; 
-        deadzone = <100>; // Adjust if drifting
+        deadzone = <100>;
     };
 };
 
-/* Enable ADC for Joystick */
 &adc {
     status = "okay";
 };
