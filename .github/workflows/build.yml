@@ -6,7 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: zmkfirmware/zmk-build-arm:3.5
+      # This is the fix. "stable" contains the newer CMake required.
+      image: zmkfirmware/zmk-build-arm:stable
     name: Build
     strategy:
       fail-fast: false
@@ -19,6 +20,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Cache west modules
         uses: actions/cache@v4
         env:
@@ -35,14 +37,19 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
       - name: West Init
         run: west init -l config
+
       - name: West Update
         run: west update
+
       - name: West Export
         run: west zephyr-export
+
       - name: West Build (${{ matrix.shield }})
         run: west build -s zmk/app -b ${{ matrix.board }} -- -DSHIELD=${{ matrix.shield }} -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
+
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
