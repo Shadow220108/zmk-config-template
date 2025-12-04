@@ -14,9 +14,9 @@ jobs:
       matrix:
         include:
           - board: seeeduino_xiao_ble
-            shield: SHADOW_SPT_left
+            shield: SHADOW_SPT_LEFT
           - board: seeeduino_xiao_ble
-            shield: SHADOW_SPT_right
+            shield: SHADOW_SPT_RIGHT
     steps:
       - name: Checkout
         uses: actions/checkout@v4
